@@ -29,7 +29,6 @@ impl Graph {
 
         let len = self.nodes.len();
         if (max(src, dst)) > len as u32 {
-            use std::iter::repeat;
             let new_len = (max(src, dst) + 1) as usize;
             self.nodes.extend(repeat(Vec::new()).take(new_len - len))
         }
