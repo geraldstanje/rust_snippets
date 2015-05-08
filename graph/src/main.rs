@@ -1,4 +1,5 @@
 use std::iter::repeat;
+use std::collections::VecDeque;
 
 fn max(a: u32, b: u32) -> u32 { if a > b { a } else { b } }
 
@@ -35,6 +36,31 @@ impl Graph {
         self.nodes[src as usize].push(Edge::new(dst, weight));
     }
     pub fn bfs(&self, src: u32) {
+        let mut current: u32 = src;
+        let mut queue: VecDeque<u32> = VecDeque::new();
+        let mut visited: Vec<bool> = Vec::new();
+        
+        // only works with rust nightly:
+        // visited.resize(self.nodes.len(), false);
+        
+        let len = self.nodes.len() as usize;
+        visited.extend(repeat(false).take(len));
+        queue.push_front(current);
+        
+        while queue.len() > 0 {
+            current = queue.pop_back();
+            if !visited[current as usize] {
+                println!("current: {}" , current);
+                visited[current as usize] = true;
+            }
+
+            for n in &self.nodes[current as usize] {
+                let neighbor: u32 = n.vertex;
+                if !visited[neighbor as usize] { queue.push_front(neighbor); }
+            }
+        }
+    }
+    pub fn dfs(&self, src: u32) {
         let mut current: u32 = src;
         let mut stack: Vec<u32> = Vec::new();
         let mut visited: Vec<bool> = Vec::new();
