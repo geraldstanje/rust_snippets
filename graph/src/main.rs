@@ -38,6 +38,7 @@ impl Graph {
     pub fn bfs(&self, src: u32) {
         let mut queue: VecDeque<u32> = VecDeque::new();
         let len = self.nodes.len() as usize;
+        // It calls .clone() on the first argument (n - 1) times, with the last value being moved into place. So, it works for any type implementing Clone, but doesn't create unnecessary copies.
         let mut visited = vec![false; len];
         
         // only works with rust nightly:
