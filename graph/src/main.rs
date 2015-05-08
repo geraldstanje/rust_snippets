@@ -37,13 +37,12 @@ impl Graph {
     }
     pub fn bfs(&self, src: u32) {
         let mut queue: VecDeque<u32> = VecDeque::new();
-        let mut visited: Vec<bool> = Vec::new();
+        let len = self.nodes.len() as usize;
+        let mut visited = vec![false; len];
         
         // only works with rust nightly:
         // visited.resize(self.nodes.len(), false);
         
-        let len = self.nodes.len() as usize;
-        visited.extend(repeat(false).take(len));
         queue.push_front(src);
         
         while let Some(current) = queue.pop_back() {
