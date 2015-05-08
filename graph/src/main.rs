@@ -36,7 +36,6 @@ impl Graph {
         self.nodes[src as usize].push(Edge::new(dst, weight));
     }
     pub fn bfs(&self, src: u32) {
-        let mut current: u32 = src;
         let mut queue: VecDeque<u32> = VecDeque::new();
         let mut visited: Vec<bool> = Vec::new();
         
@@ -45,10 +44,9 @@ impl Graph {
         
         let len = self.nodes.len() as usize;
         visited.extend(repeat(false).take(len));
-        queue.push_front(current);
+        queue.push_front(src);
         
-        while queue.len() > 0 {
-            current = queue.pop_back();
+        while let Some(current) = queue.pop_back() {
             if !visited[current as usize] {
                 println!("current: {}" , current);
                 visited[current as usize] = true;
@@ -101,4 +99,5 @@ fn main() {
     g1.add_edge(3, 1, 6.0);
     g1.add_edge(3, 2, 3.0);
     g1.bfs(0);
+    g1.dfs(0);
 }
