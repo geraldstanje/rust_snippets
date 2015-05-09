@@ -32,7 +32,7 @@ impl Graph {
     }
     pub fn bfs(&self, src: u32) {
         let mut queue: VecDeque<u32> = VecDeque::new();
-        let len = self.nodes.len() as usize;
+        let len = self.nodes.len();
         let mut visited = vec!(false ; len);
         queue.push_front(src);
         while let Some(current) = queue.pop_back() {
