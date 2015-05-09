@@ -25,6 +25,11 @@ fn main() {
         println!("{}", num);
     }
     
+    // if &x is in scope, you can't mutate x or move it
+    // if &mut x is in scope, you can only mutate x through that &mut
+    // and if (y = x) is in scope (if x has been moved out of), you can't use x at all
+    // .iter() is &; .iter_mut() is &mut; and .into_iter() moves
+
     //for num in nums.iter() {
     //    println!("{}", num);
     //}
