@@ -15,6 +15,7 @@ fn main() {
     }
     
     for handle in thread_vec {
+        // .unwrap() will propagate a panic from the child thread to the whole program
         handle.join().unwrap();
     }
 }
