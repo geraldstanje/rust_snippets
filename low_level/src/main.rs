@@ -11,12 +11,12 @@ extern crate libc;
 
 fn toggle(data: *mut u8, led_pin: u32) {
     unsafe {
-        *(data.offset(0x40000000 + 0x30) as *mut u32) ^= 1 << led_pin;
+        *(data.offset(/*0x40000000 +*/ 0x30) as *mut u32) ^= 1 << led_pin;
     }
 }
 
 fn main() {
-    let size: usize = 0x407FFFFF; // i want to access the memory from 0x40000000 to 0x407FFFFF
+    let size: usize = 0x7FFFFF; // i want to access the memory from 0x40000000 to 0x407FFFFF
 
     let mut f = fs::OpenOptions::new().read(true)
                                       .write(true)
@@ -31,9 +31,11 @@ fn main() {
 
     let mmap_opts = &[
         // Then make the mapping *public* so it is written back to the file
-        MapOption::MapNonStandardFlags(libc::consts::os::posix88::MAP_SHARED),
+        MapOption::MapNonStandardFlags(libc::MAP_SHARED), //consts::os::posix88::MAP_SHARED),
+        MapOption::MapNonStandardFlags(libc::consts::os::extra::O_SYNC),
         MapOption::MapReadable,
         MapOption::MapWritable,
+        MapOption::MapOffset(0x40000000),
         MapOption::MapFd(f.as_raw_fd()),
     ];
 
