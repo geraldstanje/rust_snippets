@@ -1,3 +1,7 @@
+// useful for debugging:
+// strace -fo logfile /path/to/exe 
+// strace -fe mmap /path/to/executable
+
 use std::ptr;
 use std::fs;
 use std::io::{Write, SeekFrom, Seek};
@@ -11,7 +15,7 @@ extern crate libc;
 
 fn toggle(data: *mut u8, led_pin: u32) {
     unsafe {
-        *(data.offset(/*0x40000000 +*/ 0x30) as *mut u32) ^= 1 << led_pin;
+        *(data.offset(0x30) as *mut u32) ^= 1 << led_pin;
     }
 }
 
@@ -20,14 +24,8 @@ fn main() {
 
     let mut f = fs::OpenOptions::new().read(true)
                                       .write(true)
-                                      //.create(true) ... i guess this should be disables!?
                                       .open("/dev/mem")
                                       .unwrap();
-
-    // Allocate space in the file first
-    //f.seek(SeekFrom::Start(size as u64)).unwrap();
-    //f.write_all(&[0]).unwrap();
-    //f.seek(SeekFrom::Start(0)).unwrap();
 
     let mmap_opts = &[
         // Then make the mapping *public* so it is written back to the file
@@ -49,13 +47,6 @@ fn main() {
     else {
         println!("successful data access to memory mapped file");
     }
-
-    //let src = "Hello!";
-    //let src_data = src.as_bytes();
-
-    //unsafe {
-    //    ptr::copy(src_data.as_ptr(), data, src_data.len());
-    //}
 
     while (true) {
         toggle(data, 3);
