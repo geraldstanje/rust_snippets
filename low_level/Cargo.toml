@@ -1,0 +1,9 @@
+[package]
+name = "rust_blink"
+version = "0.1.0"
+authors = ["Gerald Stanje <Gerald.Stanje@gmail.com>"]
+path = "src/main.rs"
+
+[dependencies]
+libc = "*"
+mmap = "*"
