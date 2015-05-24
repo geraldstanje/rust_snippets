@@ -4,9 +4,7 @@ This project shows how to cross compile your Rust application for ARM devices.
 
 ## Installation:
 
-To try the release you'll need:
-
-* Rust Cross Compiler for ARM:
+* Install the Rust Cross Compiler for ARM:
 ```
   $ git clone https://github.com/rust-lang/rust
   $ cd rust
@@ -16,7 +14,7 @@ To try the release you'll need:
   $ sudo make install
 ```
 
-* Cargo:
+* Build Cargo:
 ```
   curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --prefix=local_cargo
 ```
@@ -24,7 +22,7 @@ To try the release you'll need:
 * Reference:
   https://github.com/japaric/ruststrap/blob/master/1-how-to-cross-compile.md
 
-## Cross compiling with Cargo:
+## Cross compile your Rust App with Cargo:
 ```
 $ cargo build --target=arm-unknown-linux-gnueabihf
 ```
