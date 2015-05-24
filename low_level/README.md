@@ -4,7 +4,7 @@ This project shows how to cross compile your Rust application for ARM devices.
 
 ## Installation:
 
-* Install the Rust Cross Compiler for ARM:
+* Install the Rust Cross Compiler (1.0.0) for ARM:
 ```
   $ git clone https://github.com/rust-lang/rust
   $ cd rust
