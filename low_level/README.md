@@ -1,5 +1,3 @@
-# toycompiler
-
 ## Goal:
 
 This project shows how to cross compile your Rust application for ARM devices.
