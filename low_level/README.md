@@ -16,7 +16,7 @@ This project shows how to cross compile your Rust application for ARM devices.
 
 * Build Cargo:
 ```
-  curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --prefix=local_cargo
+  $ curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --prefix=local_cargo
 ```
 
 * Reference:
