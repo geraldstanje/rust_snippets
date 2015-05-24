@@ -12,7 +12,7 @@ extern crate libc;
 
 fn toggle(data: *mut u8, led_pin: u32) {
     unsafe {
-        *(data.offset(16) as *mut u32) ^= 1 << led_pin;
+        *(data.offset(0x30) as *mut u32) ^= 1 << led_pin;
     }
 }
 
