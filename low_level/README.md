@@ -26,3 +26,10 @@ This project shows how to cross compile your Rust application for ARM devices.
 ```
 $ cargo build --target=arm-unknown-linux-gnueabihf
 ```
+
+## Run the deploy script:
+Set the Cargo Path and the IP address of your ARM device to RP_IP.
+
+```
+$ ./deploy
+```
