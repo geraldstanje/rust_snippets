@@ -3,26 +3,15 @@ use std::fs;
 use std::io::{Write, SeekFrom, Seek};
 use std::os::unix::prelude::AsRawFd;
 use mmap::{MemoryMap, MapOption};
-use std::thread;
-use std::env;
+use libc;
 
-// from crates.io
-extern crate mmap;
-extern crate libc;
-
-fn toggle(data: *mut u8, led_pin: u32) {
-    unsafe {
-        *(data.offset(0x30) as *mut u32) ^= 1 << led_pin;
-    }
-}
-
-struct fpga_awg {
+struct fpgaAwg {
     mmap: MemoryMap,
     data: *mut u8,
 }
 
-impl fpga_awg {
-  pub fn new() -> fpga_awg {  
+impl fpgaAwg {
+  pub fn new() -> fpgaAwg {  
     let size: usize = 0x1000;
 
     let mut f = fs::OpenOptions::new().read(true)
@@ -49,6 +38,12 @@ impl fpga_awg {
         println!("successful data access to memory mapped file");
     }
 
-    fpga_awg {mmap: mmap, data: data}
+    fpgaAwg {mmap: mmap, data: data}
+  }
+
+  pub fn toggle(&mut self, led_pin: u32) {
+      unsafe {
+          *(self.data.offset(0x30) as *mut u32) ^= 1 << led_pin;
+      }
   }
 }
