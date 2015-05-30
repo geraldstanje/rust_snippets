@@ -14,6 +14,10 @@ fn create2(t: &str) -> Vec<&str> {
     m.clone()
 }
 
+fn create3(t: &str) -> Vec<&str> {
+    vec![t; 10]
+}
+
 fn main() {
     let mut u = create1();
 
@@ -24,6 +28,11 @@ fn main() {
     let mut v = create2("hello");
 
     for n in v.iter() {
+        println!("{}", n);
+    }
+
+    let w = create3("hello");
+    for n in &w {
         println!("{}", n);
     }
 }
