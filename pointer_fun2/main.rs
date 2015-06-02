@@ -54,6 +54,7 @@ fn main() {
         println!("{}", unsafe { (*cha_signal3)[i] });
     }
     
+    // preferred version
     let mut cha_signal4: &mut [u32; n] = f.get_sig_ptr4();
     
     for i in 1..n {
