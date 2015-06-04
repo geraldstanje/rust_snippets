@@ -4,14 +4,14 @@ extern crate libc;
 
 use std::thread;
 use std::env;
-mod fpga_awg;
+mod fpga_hk;
 
 fn main() {
     if let Some(arg1) = env::args().nth(1) {
-        let mut awg = fpga_awg::fpgaAwg::new();
+        let mut hk = fpga_awg::fpgaHk::new();
 
         while (true) {
-            awg.toggle(1);
+            hk.toggle(1);
             thread::sleep_ms(arg1.parse::<u32>().unwrap());
         }
     }

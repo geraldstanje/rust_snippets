@@ -5,13 +5,13 @@ use std::os::unix::prelude::AsRawFd;
 use mmap::{MemoryMap, MapOption};
 use libc;
 
-struct fpgaAwg {
+struct fpgaHk {
     mmap: MemoryMap,
     data: *mut u8,
 }
 
-impl fpgaAwg {
-  pub fn new() -> fpgaAwg {  
+impl fpgaHk {
+  pub fn new() -> fpgaHk {  
     let size: usize = 0x1000;
 
     let mut f = fs::OpenOptions::new().read(true)
@@ -38,7 +38,7 @@ impl fpgaAwg {
         println!("successful data access to memory mapped file");
     }
 
-    fpgaAwg {mmap: mmap, data: data}
+    fpgaHk {mmap: mmap, data: data}
   }
 
   pub fn toggle(&mut self, led_pin: u32) {
