@@ -27,7 +27,6 @@ struct hk_reg {
 
 pub struct fpgaHk {
   mmap: MemoryMap,
-  data: *mut u8,
   hkReg: *mut hk_reg,
 }
 
@@ -62,7 +61,7 @@ impl fpgaHk {
         hkReg = data.offset(HK_BASE_ADDR) as *mut hk_reg;
     }
 
-    fpgaHk {mmap: mmap, data: data, hkReg: hkReg}
+    fpgaHk {mmap: mmap, hkReg: hkReg}
   }
 
   pub fn toggle(&mut self, led_pin: u32) {
@@ -83,11 +82,11 @@ impl fpgaHk {
       }
   }
 
-  //pub fn clear_exp_p_gpo(&mut self, pin: u32) {
-  //    unsafe {
-  //        (*self.hkReg).exp_out_p = ~(1 << pin);
-  //    }
-  //}
+  pub fn clear_exp_p_gpo(&mut self, pin: u32) {
+      unsafe {
+          (*self.hkReg).exp_out_p = !(1 << pin);
+      }
+  }
 
   pub fn set_exp_p_gpo(&mut self, pin: u32) {
       unsafe {
