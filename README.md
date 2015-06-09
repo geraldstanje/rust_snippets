@@ -1,4 +1,4 @@
-## Rust Playground:
+## rust_snippets:
 This repo shows some examples which I implemented to learn the Rust Programming Language.
 
 ## References:
