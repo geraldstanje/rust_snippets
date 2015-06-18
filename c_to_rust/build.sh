@@ -2,12 +2,14 @@
 
 all() { 
   rustc add.rs
-  gcc -Wall -o main main.c -L $(pwd) -ladd -lSystem -lpthread -lc -lm
+  rustc hello.rs
+  gcc -Wall -o main main.c -L $(pwd) -ladd -lhello -lSystem -lpthread -lc -lm
 }
 
 
 clean() {
   rm libadd.a
+  rm libhello.a
   rm main
 }
 
