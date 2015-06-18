@@ -5,7 +5,6 @@
 
 int main(int argc, char *argv[]) {
   int res = add(2, 3);
-
   printf("%d", res);
 
   hello("hello world");
