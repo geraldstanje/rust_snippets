@@ -3,7 +3,7 @@
 all() { 
   rustc add.rs
   rustc hello.rs
-  gcc -Wall -o main main.c -L $(pwd) -ladd -lhello -lSystem -lpthread -lc -lm
+  g++ -Wall -o main main.cpp -L $(pwd) -ladd -lhello -lSystem -lpthread -lc -lm
 }
 
 
