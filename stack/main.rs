@@ -32,18 +32,30 @@ impl<T> Stack<T> {
     }
 }
 
+fn print(input_num: Option<u32>) {
+    let num = match input_num {
+        Some(num) => num,
+        None      => {
+            println!("stack empty");
+            return;
+        }
+    };
+    
+    println!("{}", num);
+}
+
 fn main() {
     let mut stack = Stack::new();
-    
+  
     stack.push(1);
     stack.push(2);
     stack.push(3);
-    println!("{:?}", stack.pop());
+    print(stack.pop());
     stack.push(4);
-    println!("{:?}", stack.pop());
-    println!("{:?}", stack.pop());
+    print(stack.pop());
+    print(stack.pop());
     stack.push(5);
-    println!("{:?}", stack.pop());
-    println!("{:?}", stack.pop());
-    println!("{:?}", stack.pop());
+    print(stack.pop());
+    print(stack.pop());
+    print(stack.pop());
 }
