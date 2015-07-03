@@ -159,9 +159,11 @@ fn main() {
     
     g1.bfs(3);
     
-    println!("\n");
+    println!("");
     
     g1.dfs(3);
 
-    g1.dijkstra(0, 2);
+    println!("");
+    
+    g1.dijkstra(0, 3);
 }
