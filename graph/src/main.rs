@@ -72,6 +72,7 @@ impl Graph {
             }
         }
     }
+    
     pub fn dfs(&self, src: u32) {
         let mut stack: Vec<u32> = Vec::new();
         let len = self.nodes.len() as usize;
