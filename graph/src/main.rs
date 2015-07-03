@@ -5,7 +5,7 @@ use std::cmp::Ordering;
 
 fn max(a: u32, b: u32) -> u32 { if a > b { a } else { b } }
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone)]
 struct Edge {
     vertex: u32,
     weight: f32,
@@ -19,13 +19,23 @@ impl Edge {
 
 impl Ord for Edge {
     fn cmp(&self, other: &Self) -> Ordering {
-        (self.weight, &self.vertex).cmp(&(other.weight, &other.vertex))
+        self.partial_cmp(other).unwrap()
     }
 }
 
+impl Eq for Edge {}
+
+//impl Eq for Edge {}
+
 impl PartialOrd for Edge {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.cmp(other))
+        (self.weight, self.vertex).partial_cmp(&(other.weight, other.vertex))
+    }
+}
+
+impl PartialEq for Edge {
+    fn eq(&self, other: &Self) -> bool {
+        (self.weight, &self.vertex) == (other.weight, &other.vertex)
     }
 }
 
