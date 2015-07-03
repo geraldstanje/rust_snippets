@@ -96,11 +96,11 @@ impl Graph {
       let mut dist: Vec<f32> = Vec::new();
       let mut prev: Vec<u32> = Vec::new();
       let mut q = BinaryHeap::new();
-      const max_weight: f32 = std::f32::MAX;
+      const MAX_WEIGHT: f32 = std::f32::MAX;
 
       // init dist, prev table
-      for i in 0..self.nodes.len() {
-        dist.push(max_weight);
+      for _ in 0..self.nodes.len() {
+        dist.push(MAX_WEIGHT);
         prev.push(0);
       }
 
@@ -108,16 +108,16 @@ impl Graph {
       dist[src as usize] = 0.0;
       q.push(Edge::new(src, dist[src as usize]));
 
-      //while (!q.is_empty()) {
       while let Some(u) = q.pop() {
-        //let u: Edge = el.unwrap();
-
         // loop for all edges connected to
         for v in self.nodes[u.vertex as usize].iter() {
 
           let alt: f32 = dist[u.vertex as usize] + v.weight; // accumulate shortest dist from source
 
-          if (alt < dist[v.vertex as usize]) {
+          // The variable alt is the length of the path from the root node to the neighbor node v 
+          // if it were to go through u. If this path is shorter than the current shortest path 
+          // recorded for v, that current path is replaced with this alt path.
+          if alt < dist[v.vertex as usize] {
             dist[v.vertex as usize] = alt; // keep the shortest dist from src to v
             prev[v.vertex as usize] = u.vertex;
 
@@ -126,19 +126,19 @@ impl Graph {
         }
       }
 
-      let mut shortestPath: Vec<u32> = Vec::new();
+      let mut shortest_path: Vec<u32> = Vec::new();
       let mut curr: u32 = dst;
 
-      shortestPath.push(curr);
+      shortest_path.push(curr);
     
-      while (curr != src) {
+      while curr != src {
         curr = prev[curr as usize];
-        shortestPath.push(curr);
+        shortest_path.push(curr);
       }
     
-      shortestPath.reverse();
+      shortest_path.reverse();
 
-      for v in shortestPath.iter() {
+      for v in shortest_path.iter() {
         println!("{}", v);
       }
     }
