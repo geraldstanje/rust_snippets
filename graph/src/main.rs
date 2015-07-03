@@ -53,6 +53,7 @@ impl Graph {
         }
         self.nodes[src as usize].push(Edge::new(dst, weight));
     }
+    
     pub fn bfs(&self, src: u32) {
         let mut queue: VecDeque<u32> = VecDeque::new();
         let len = self.nodes.len();
@@ -72,7 +73,7 @@ impl Graph {
             }
         }
     }
-    
+
     pub fn dfs(&self, src: u32) {
         let mut stack: Vec<u32> = Vec::new();
         let len = self.nodes.len() as usize;
