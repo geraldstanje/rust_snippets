@@ -25,8 +25,6 @@ impl Ord for Edge {
 
 impl Eq for Edge {}
 
-//impl Eq for Edge {}
-
 impl PartialOrd for Edge {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         (self.weight, self.vertex).partial_cmp(&(other.weight, other.vertex))
