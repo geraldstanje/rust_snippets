@@ -142,7 +142,7 @@ impl Graph {
       shortest_path.reverse();
 
       for v in shortest_path.iter() {
-        println!("{}", v);
+        println!("current: {}", v);
       }
     }
 }
@@ -160,13 +160,16 @@ fn main() {
     g1.add_edge(3, 1, 6.0);
     g1.add_edge(3, 2, 3.0);
     
-    g1.bfs(3);
+    println!("bfs");
+    g1.bfs(0);
     
     println!("");
     
-    g1.dfs(3);
+    println!("dfs");
+    g1.dfs(0);
 
     println!("");
     
+    println!("dijkstra");
     g1.dijkstra(0, 3);
 }
