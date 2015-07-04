@@ -1,3 +1,5 @@
+#![feature(vec_resize)]
+
 use std::iter::repeat;
 use std::collections::VecDeque;
 use std::collections::BinaryHeap;
@@ -101,10 +103,9 @@ impl Graph {
       const MAX_WEIGHT: f32 = std::f32::MAX;
 
       // init dist, prev table
-      for _ in 0..self.nodes.len() {
-        dist.push(MAX_WEIGHT);
-        prev.push(0);
-      }
+      // would only work in rust nightly
+      dist.resize(self.nodes.len(), MAX_WEIGHT);
+      prev.resize(self.nodes.len(), 0);
 
       // We're at `start`, with a zero cost
       dist[src as usize] = 0.0;
