@@ -9,7 +9,7 @@ struct TwoNums<T> {
 }
 
 // You implement function for struct TwuNums which accept type T with following traits: Add and One
-impl<T> TwoNums<T> where T: Add<Output=T> + One {
+impl<T> TwoNums<T> where T: Add<Output=T> {
   fn new(a: T, b: T) -> TwoNums<T> {
     TwoNums {a: a, b: b}
   }
