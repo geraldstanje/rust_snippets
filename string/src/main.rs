@@ -13,4 +13,14 @@ fn main() {
     }
     
     println!("{}", mystr2);
+
+    mystr2 = "Hello World".to_string();
+
+    println!("{}", mystr2);
+
+    let num: u32 = 12;
+
+    mystr2 = num.to_string();
+
+    println!("{}", mystr2);
 }
