@@ -40,7 +40,8 @@ fn print_tree<T:Debug>(t: &Tree<T>) {
     
     while let Some(mut u) = q.pop_front() {
         if u.depth > depth_old {
-            println!("{:?}", u.iter.data);
+            println!("");
+            print!("{:?}", u.iter.data);
             print!(" ");
         }
         else {
