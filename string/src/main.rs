@@ -1,3 +1,9 @@
+pub fn sort(word: &'static str) -> String {
+    let mut chars: Vec<char> = word.chars().collect();     
+    chars.sort();
+    return chars.into_iter().collect();
+}
+
 fn main() {
     let mystr1: &'static str = "This is a readonly string";
     
@@ -23,4 +29,7 @@ fn main() {
     mystr2 = num.to_string();
 
     println!("{}", mystr2);
+
+    let str = sort("abzerfdsgyiof");
+    print!("{}", str);
 }
