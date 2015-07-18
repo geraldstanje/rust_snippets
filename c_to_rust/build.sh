@@ -1,9 +1,9 @@
 #!/bin/sh
 
 all() { 
-  rustc add.rs
-  rustc hello.rs
-  gcc -Wall -o main main.c -L $(pwd) -ladd -lhello -lSystem -lpthread -lc -lm
+  rustc src/add.rs
+  rustc src/hello.rs
+  gcc -Wall -o main src/main.c -L $(pwd) -ladd -lhello -lSystem -lpthread -lc -lm
 }
 
 
