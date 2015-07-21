@@ -10,6 +10,6 @@ fn main() {
     vec.push(MyStruct{a: 2, b: 2});
     
     for e in vec.into_iter().filter(|x| x.a > 1) {
-        println!("{}", e.a);
+        println!("{}", e.b);
     }
 }
