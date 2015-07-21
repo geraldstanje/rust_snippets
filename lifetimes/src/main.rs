@@ -15,6 +15,30 @@ fn get_model<'a>(car: &'a Car) -> &'a str {
     &car.model
 }
 
+struct Test
+{
+    val: i32,
+}
+
+trait Double
+{
+    fn double(&self) -> i32;
+}
+
+impl Double for Test
+{
+    fn double(&self) -> i32
+    {
+        self.val * 2
+    }
+}
+
+fn do_stuff<'a, F>(obj: &'a Double, f: F)
+    where F: Fn(&'a Double) -> i32
+{
+    println!("{}", f(obj));
+}
+
 fn main() {
     let car = Car {
         // construct a `String` from a reference to a string (`&'static str`)
@@ -27,4 +51,7 @@ fn main() {
     let model: &str = get_model(&car);
 
     println!("Car model: {}", model);
+
+    let asd = Test{ val: 42 };
+    do_stuff(&asd, Double::double);
 }
