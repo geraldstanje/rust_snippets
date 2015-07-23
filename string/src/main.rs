@@ -4,6 +4,29 @@ pub fn sort(word: &'static str) -> String {
     return chars.into_iter().collect();
 }
 
+fn extract_numbers(s: &str) -> Vec<String> {
+    let mut num = String::new();
+    let mut m = vec![];
+    
+    for c in s.chars() {
+        if c.is_numeric() {
+            num.push(c);
+        }
+        else {
+            if !num.is_empty() {
+                m.push(num.clone());
+                num.clear();
+            }
+        }
+    }
+    
+    if !num.is_empty() {
+        m.push(num);
+    }
+    
+    return m;
+}
+
 fn main() {
     let mystr1: &'static str = "This is a readonly string";
     
@@ -32,4 +55,11 @@ fn main() {
 
     let str = sort("abzerfdsgyiof");
     print!("{}", str);
+
+    let mystr3 = "x12y7".to_string();
+    let m: Vec<String> = extract_numbers(&mystr3); // -> ( "12", "7" )
+    
+    for x in m.iter() {
+        println!("{}", x);
+    }
 }
