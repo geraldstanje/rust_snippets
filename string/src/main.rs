@@ -55,9 +55,11 @@ fn main() {
 
     let str = sort("abzerfdsgyiof");
     print!("{}", str);
-
+    
     let mystr3 = "x12y7".to_string();
     let m: Vec<String> = extract_numbers(&mystr3); // -> ( "12", "7" )
+    
+    println!("");
     
     for x in m.iter() {
         println!("{}", x);
