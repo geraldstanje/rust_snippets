@@ -1,0 +1,446 @@
+\documentclass{beamer} %
+\usetheme{CambridgeUS}
+\usepackage[latin1]{inputenc}
+\usefonttheme{professionalfonts}
+\usepackage{times}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{multimedia}
+\usepackage{listings}
+%\usepackage{movie15}
+%\usepackage{media9}
+\usetikzlibrary{arrows,shapes}
+
+\author{Gerald Stanje}
+\title{From C++ to Rust}
+
+\title[] %optional
+{From C++ to Rust}
+ 
+\subtitle{A high level overview about two Systems Programming Languages}
+ 
+\author[] % (optional, for multiple authors)
+{Gerald Stanje}
+
+\begin{document}
+
+\frame{\titlepage}
+
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+\tikzstyle{every picture}+=[remember picture]
+
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+% Slide 1
+\begin{frame}
+\frametitle{Content}
+
+\tikzstyle{na} = [baseline=-.5ex]
+
+\begin{itemize}
+    \item Systems Programming
+    \item Memory management in C++
+    \item Static Analysis
+    \item Rust
+    \item Ownership in Rust
+    \item Borrow in Rust
+    \item Concurrency in Rust
+    \item Cargo
+\end{itemize}
+
+\end{frame}
+
+% Slide 2
+\begin{frame}
+\frametitle{System Programming}
+
+\begin{itemize}
+    \item Programmer needs very explicit control over the hardware
+    \begin{itemize}
+    	\item How much memory is used?
+	\item What code is generated?
+	\item When the memory is allocated or freed?
+    \end{itemize}
+    \item Used to build: operating systems, compilers, device drivers, factory automation, robots, high performance mathematical software, games
+\end{itemize}
+
+\end{frame}
+
+% Slide 3
+\begin{frame}
+\frametitle{Memory management in C++ is hard}
+
+\movie[externalviewer]{Video}{video.mp4}
+
+\end{frame}
+
+% Slide 4
+\begin{frame}[fragile]
+\frametitle{C++ Safety}
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+int main() {
+    vector<string> vec;
+    vec.push_back("FC");
+    auto& elem = vec[0];
+    vec.push_back("Bayern Munich");
+    cout << elem << endl;
+}
+\end{lstlisting}
+
+\end{frame}
+
+% Slide 5
+\begin{frame}[fragile]
+\frametitle{C++ Safety}
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+int main() {
+    vector<string> vec;
+    vec.push_back("FC");
+    auto& elem = vec[0];
+    vec.push_back("Bayern Munich");
+    cout << elem << endl;
+}
+\end{lstlisting}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.25]{safety.png}
+\end{figure}
+
+\end{frame}
+
+% Slide 6
+\begin{frame}
+\frametitle{Static Analysis}
+
+\begin{itemize}
+    \item Lots of free, open source and commercial offerings for static analysis of C++ source
+    \begin{itemize}
+	\item cppcheck
+	\item clang-analyse
+	\item coverity
+    \end{itemize}
+\item Analyzers for code guideline profiles
+    \begin{itemize}
+	\item bounds
+	\item types
+	\item lifetimes
+    \end{itemize}
+\item Downside: False Positives $\rightarrow$ cannot see if a certain condition can never happen if e.g. it depends on input.
+\end{itemize}
+
+\end{frame}
+
+% Slide 7
+\begin{frame}
+\frametitle{What is Rust?}
+
+\begin{itemize}
+    \item systems programming language
+    \item blazingly fast
+    \item compiled binary
+    \item immutable by default
+    \item prevents almost all crashes: no segmentation faults, no null pointers, no dangling pointers
+    \item eliminates data races: two parallel processes access memory location in parallel, at least one process writes to the memory.
+    \item uses LLVM in the backend
+\end{itemize}
+
+\end{frame}
+
+% Slide 8
+\begin{frame}[fragile]
+\frametitle{Ownership in Rust}
+
+\begin{itemize}
+    \item Exactly one owner per allocation
+    \item Memory freed when the owner leaves scope
+    \begin{itemize}
+    	\item All references must be out of scope too
+    \end{itemize}
+    \item Ownership may be transferred (move)
+    \begin{itemize}
+    	\item Invalidates prior owner
+    \end{itemize}
+\end{itemize}
+
+\lstset{language=Java,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+fn print(a: Vec<i32>) {}
+
+fn main() {
+    let s = Vec::new();
+    a.push(1);
+    a.push(2);
+    
+    print(s);
+    print(s); // error: s is no longer the 
+    // owner of the vector
+}    
+\end{lstlisting}
+
+\end{frame}
+
+% Slide 9
+\begin{frame}[fragile]
+\frametitle{Shared Borrow in Rust}
+
+\begin{itemize}
+    \item Ownership may be temporary (borrow)
+    \begin{itemize}
+    	\item References are created with \&
+    \end{itemize}
+    \item Borrowing prevents moving
+    \item Shared references are immutable
+\end{itemize}
+    
+\lstset{language=Java,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+fn print(a: &Vec<i32>) {}
+
+fn main() {
+    let a = Vec::new();
+    a.push(1);
+    a.push(2);
+    
+    print(&a);
+    print(&a);
+}    
+\end{lstlisting}
+
+\end{frame}
+
+% Slide 10
+%\begin{frame}[fragile]
+%\frametitle{Borrow in Rust}
+
+%\begin{itemize}
+%    \item Borrows values are valid for a lifetime
+%\end{itemize}
+    
+%\lstset{language=Java,
+%                basicstyle=\ttfamily,
+%                keywordstyle=\color{blue}\ttfamily,
+%                stringstyle=\color{red}\ttfamily,
+%                commentstyle=\color{green}\ttfamily,
+%                morecomment=[l][\color{magenta}]{\#}
+%}
+%\begin{lstlisting}
+%fn print(a: &Vec<i32>) {}
+
+%fn main() {
+%    let a = Vec::new();
+%    a.push(1);
+%    a.push(2);
+    
+%    {
+%    	let b = &a;
+%    }
+    
+%    print(a);
+%}    
+%\end{lstlisting}
+
+%\end{frame}
+
+% Slide 11
+\begin{frame}[fragile]
+\frametitle{Mutable Borrow in Rust}
+
+\begin{itemize}
+    %\item Cannot have both shared and mutable reference at the same time
+    \item There can only be one unique reference to a var. that is mutable
+    \item Borrows values are valid for a lifetime
+\end{itemize}
+    
+\lstset{language=Java,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+fn muliply(vec: &mut Vec<i32>) {
+    for e in vec.iter_mut() { *e *= 2; }
+}
+
+fn main() {
+    let mut vec: Vec<i32> = vec![1, 2];
+    {
+        let mut vec2 = &mut vec;
+        muliply(&mut vec2);
+    }
+    muliply(&mut vec);
+}
+\end{lstlisting}
+
+\end{frame}
+
+% Slide 12
+\begin{frame}[fragile]
+\frametitle{Concurrency in Rust}
+
+\begin{itemize}
+    \item Using ownership to prevent data races
+    \item Parallelism is achieved at the granularity of an OS thread
+    \item Safety is achieved by requiring that a 'move' owns captured variables
+    %\begin{itemize}
+    %    \item a move owns its environment
+    %\end{itemize}
+\end{itemize}
+
+\lstset{language=Java,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+fn main() {
+    let mut a = Vec::new();
+    // 'move' instructs the closure to move out of 
+    // its environment
+    thread::spawn(move || {
+        a.push("foo");
+    });
+    a.push("bar"); // error: using a moved value
+}
+\end{lstlisting}
+   
+\end{frame}
+
+% Slide 13
+\begin{frame}[fragile]
+\frametitle{Concurrency in Rust}
+
+\begin{itemize}
+    \item Threads can communicate with channels
+\end{itemize}
+
+\lstset{language=Java,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+fn main() {
+    let (tx, rx) = mpsc::channel();
+    let x = Box::new(5); // allocate 5 on the heap
+    
+    thread::spawn(move || {
+        let result = 5 + *x;
+        tx.send(result);
+    });
+    
+    let result = rx.recv().unwrap();
+    println!("{}", result);
+}
+\end{lstlisting}
+
+\end{frame}
+
+% Slide 14
+%\begin{frame}[fragile]
+%\frametitle{Unsafe in Rust}
+   
+%\begin{itemize}
+%    \item Unsafe blocks in Rust are used to bypass protections put in place by the compiler
+%    \item Dereferencing raw pointers
+%\end{itemize}
+
+%\lstset{language=Java,
+%                basicstyle=\ttfamily,
+%                keywordstyle=\color{blue}\ttfamily,
+%                stringstyle=\color{red}\ttfamily,
+%                commentstyle=\color{green}\ttfamily,
+%                morecomment=[l][\color{magenta}]{\#}
+%}
+%\begin{lstlisting}
+%fn main() {
+%    let raw_p: *const u32 = &10;
+
+%    unsafe {
+%        assert!(*raw_p == 10);
+%    }
+%}
+%\end{lstlisting}
+
+%\end{frame}
+
+% Slide 15
+\begin{frame}[fragile]
+\frametitle{Cargo}
+
+\lstset{language=Bash,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+
+\begin{itemize}
+    \item Package manager, similar to pip in Python
+    \item Download and manage dependencies
+    \item Build the project
+    \begin{itemize}
+        \item Create Cargo.toml
+        \begin{lstlisting}
+$ cargo new hello_word --bin
+        \end{lstlisting}
+        \item Cargo.toml
+        \begin{lstlisting}
+[package]
+name = "hello_world"
+version = "0.1.0"
+authors = ["Gerald Stanje"]
+[dependencies]
+regex = "0.1.33"
+        \end{lstlisting}
+        \item Build project
+        \begin{lstlisting}
+$ cargo build --release
+Compiling hello_world v0.1.0 (file:///ho
+me/geri/code/hello_world)
+        \end{lstlisting}
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\end{document}
